@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-zweb);
+      }
+
+      .cls-2 {
+        fill: #fff;
+        font-size: 601px;
+        font-family: AgletMono-SemiboldItalic, Aglet Mono;
+        font-weight: 600;
+        font-style: italic;
+      }
+    </style>
+    <clipPath id="clip-zweb">
+      <rect width="1920" height="1080"/>
+    </clipPath>
+  </defs>
+  <g id="zweb" class="cls-1">
+    <text id="z_WEB" data-name="z/WEB" class="cls-2" transform="translate(55 765)"><tspan x="0" y="0">z/WEB</tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,30 @@
+{
+  "name": "gulp-env",
+  "version": "1.0.0",
+  "description": "My personal Gulp Development enironment",
+  "main": "Gulpfile.js",
+  "scripts": {
+    "gulp": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://git.nated.ca/nate/gulpEnv.git"
+  },
+  "author": "nate del duca",
+  "license": "ISC",
+  "bugs": {
+    "url": "http://git.nated.ca/nate/gulpEnv/issues"
+  },
+  "homepage": "http://git.nated.ca/nate/gulpEnv#readme",
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-pug": "^4.0.1",
+    "gulp-sass": "^4.0.2"
+  },
+  "keywords": [
+    "gulp"
+  ]
+}
