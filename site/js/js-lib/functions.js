@@ -1,93 +1,97 @@
 
 $(document).ready(function(){
+    console.log('document ready');
 
-      $(".api-scroll").click(function() {
-            $('html,body').animate({
-                scrollTop: $("#api").offset().top},
-                'slow');
+      $("#lowercase").click(function() {
 
-                console.log('clicked');
+            if ($("#lowercase").hasClass("is-success")) {
+                $("#lowercase").removeClass("is-success")
+                console.log('lowercase deactivated');
+            } else {
+                $("#lowercase").addClass("is-success")
+                console.log('lowercase activated');
+            }
         });
 
-        $(".ws-scroll").click(function() {
-            $('html,body').animate({
-                scrollTop: $("#ws").offset().top},
-                'slow');
+      $("#uppercase").click(function() {
 
-                console.log('clicked');
+            if ($("#uppercase").hasClass("is-success")) {
+                $("#uppercase").removeClass("is-success")
+                console.log('uppercase deactivated');
+            } else {
+                $("#uppercase").addClass("is-success")
+                console.log('uppercase activated');
+            }
         });
 
+      $("#number").click(function() {
 
-      $(".home-scroll").click(function() {
-            $('html,body').animate({
-                scrollTop: $("#home").offset().top},
-                'slow');
-
-                console.log('clicked');
+            if ($("#number").hasClass("is-success")) {
+                $("#number").removeClass("is-success")
+                console.log('numbers deactivated');
+            } else {
+                $("#number").addClass("is-success")
+                console.log('numbers activated');
+            }
         });
 
-      $(".docker-scroll").click(function() {
-            $('html,body').animate({
-                scrollTop: $("#docker").offset().top},
-                'slow');
+      $("#special").click(function() {
 
-                console.log('clicked');
+            if ($("#special").hasClass("is-success")) {
+                $("#special").removeClass("is-success")
+                console.log('special deactivated');
+            } else {
+                $("#special").addClass("is-success")
+                console.log('special activated');
+            }
         });
 
-      
-        $(".web-scroll").click(function() {
-            $('html,body').animate({
-                scrollTop: $("#web").offset().top},
-                'slow');
+        $("#submit").click(() =>{
+            if (!$("#special").hasClass("is-success") && !$("#number").hasClass("is-success") && !$("#uppercase").hasClass("is-success") && !$("#lowercase").hasClass("is-success")){
+                console.log('must select at least one option.');
+            } else  if ($("#special").hasClass("is-success") || $("#number").hasClass("is-success") || $("#uppercase").hasClass("is-success") || $("#lowercase").hasClass("is-success")){
+                request(
+                    $("#length").val(),
+                    $("#lowercase").hasClass("is-success"),
+                    $("#uppercase").hasClass("is-success"),
+                    $("#number").hasClass("is-success"), 
+                    $("#special").hasClass("is-success")
+                )
+            }
+        })
 
-                console.log('clicked');
-        });
-
-        $(".infra-scroll").click(function() {
-            $('html,body').animate({
-                scrollTop: $("#infra").offset().top},
-                'slow');
-
-                console.log('clicked');
-        });
-
-        $(".images-scroll").click(function() {
-            $('html,body').animate({
-                scrollTop: $("#images").offset().top},
-                'slow');
-
-                console.log('clicked');
-        });
-
-        $(".environments-scroll").click(function() {
-            $('html,body').animate({
-                scrollTop: $("#environments").offset().top},
-                'slow');
-
-                console.log('clicked');
-        });
-
-        $('.navbar-burger').click(function(){
-            $('.navbar-menu').toggleClass('is-active')
-        });
-
-        //picture 4 modal appear and disappear
-        $('.picture4').click(function(){
-            $('.modal.four').addClass('is-active')
-        });
-
-        $('.modal-background').click(function(){
-            $('.modal.four').removeClass('is-active')
-        });
-        //picture 4 modal appear and disappear
-
-        //picture 2 modal appear and disappear
-        $('.picture2').click(function(){
-            $('.modal.two').addClass('is-active')
-        });
-
-        $('.modal-background').click(function(){
-            $('.modal.two').removeClass('is-active')
-        });
-        //picture 2 modal appear and disappear
 });
+
+const request = async (length,lower,upper,number,special)=>{
+    try {
+        let body = await {
+            length: parseInt(length),
+            lower: lower,
+            upper: upper,
+            number: number,
+            special: special
+        }
+        console.log(body)
+        let url = await "http://localhost:8080/generateBody"
+        fetch(url,{
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+                "content-type":"application/json"
+            }
+        })
+            .then(data => {return data.json()})
+            .then(json => {
+                if (json.error == null && json.status == 200) {
+                    $("#password").val(json.password)
+                } else {
+                    console.log(json)
+                }
+
+            })
+            .catch(err => {throw err})
+
+    } catch (error) {
+        console.log(error)
+    }
+}

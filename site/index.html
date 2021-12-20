@@ -14,31 +14,31 @@
             <div class="column is-two-fifths"> 
               <section class="is-large">
                 <div class="title">Password Generator</div>
-                <div class="subtitle">Generate a secure password from 4 to 32 characters with the options of your choice.</div>
+                <div class="subtitle">Generate a secure password from 4 to 64 characters with the options of your choice.</div>
               </section>
             </div>
             <div class="column is-three-fifths"> 
               <section class="is-large">
                 <div class="field has-addons">
                   <p class="control is-expanded">
-                    <input class="input" type="text" placeholder="Your Password Here">
+                    <input class="input" id="password" type="text" placeholder="Your Password Here">
                   </p>
                 </div>
                 <div class="field has-addons">
                   <p class="control is-expanded">
-                    <input class="input" type="number" min="0" max="64" placeholder="Password Length">
+                    <input class="input" id="length" value="8" type="number" min="4" max="64" placeholder="Password Length">
                   </p>
-                  <p class="control"><a class="button">Generate</a></p>
+                  <p class="control"><a class="button" id="submit">Generate</a></p>
                 </div>
                 <div class="field is-expanded is-full-width">
                   <h2 class="subtitle">Choose your options</h2>
                 </div>
                 <div class="field">
                   <div class="buttons is-left">
-                    <div class="button is-success is-selected">UpperCase</div>
-                    <div class="button">LowerCase</div>
-                    <div class="button">Numbers</div>
-                    <div class="button">Special Characters</div>
+                    <div class="button is-success" id="lowercase">LowerCase</div>
+                    <div class="button" id="uppercase">UpperCase</div>
+                    <div class="button" id="number">Numbers</div>
+                    <div class="button" id="special">Special Characters</div>
                   </div>
                 </div>
               </section>

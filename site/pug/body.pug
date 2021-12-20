@@ -5,24 +5,24 @@ section.hero.is-info.is-fullheight
                         .column.is-two-fifths 
                               section.is-large
                                     .title Password Generator
-                                    .subtitle Generate a secure password from 4 to 32 characters with the options of your choice.
+                                    .subtitle Generate a secure password from 4 to 64 characters with the options of your choice.
                         .column.is-three-fifths 
                               section.is-large
                                     .field.has-addons
                                                 p.control.is-expanded
-                                                      input.input(type="text" placeholder="Your Password Here")
+                                                      input#password.input(type="text" placeholder="Your Password Here")
                                     .field.has-addons
                                           p.control.is-expanded
-                                                input.input(type="number" min="0" max="64" placeholder="Password Length")
+                                                input#length.input(value="8" type="number" min="4" max="64" placeholder="Password Length")
                                           p.control
-                                                a.button Generate
+                                                a#submit.button Generate
                                     .field.is-expanded.is-full-width
                                           h2.subtitle Choose your options
                                     .field
                                           .buttons.is-left
-                                                .button.is-success.is-selected UpperCase
-                                                .button LowerCase
-                                                .button Numbers
-                                                .button Special Characters
+                                                #lowercase.button.is-success LowerCase
+                                                #uppercase.button UpperCase
+                                                #number.button Numbers
+                                                #special.button Special Characters
                                     
             
