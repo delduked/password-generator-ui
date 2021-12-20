@@ -8972,3 +8972,6 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 body {
   margin: 0;
   padding: 0; }
+
+table {
+  border-radius: 4px; }

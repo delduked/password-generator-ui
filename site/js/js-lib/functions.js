@@ -72,7 +72,7 @@ const request = async (length,lower,upper,number,special)=>{
             special: special
         }
         console.log(body)
-        let url = await "http://localhost:8080/generateBody"
+        let url = await "http://192.168.0.6:8080/generateBody"
         fetch(url,{
             method: 'POST',
             body: JSON.stringify(body),
