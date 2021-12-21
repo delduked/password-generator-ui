@@ -11,7 +11,7 @@ $('#edit').click(function(){
       
 })
 
-const updatePassword = async (account, username, password) =>{
+const updatePassword = async (account, username, password, jq) =>{
       try {
             let body = await {
                   account: account,
@@ -26,7 +26,15 @@ const updatePassword = async (account, username, password) =>{
                   headers: {
                         "content-type":"application/json"
                   }
-            }).catch(err => {throw err})
+            })
+            .then(data => {return data.json()})
+            .then(json => {
+                  jq.parent().parent().prev().children("td#account").text(account)
+                  jq.parent().parent().prev().children("td#username").text(username)
+                  jq.parent().parent().prev().children("td#password").text(password)
+                  console.log(json)
+            })
+            .catch(err => {throw err})
           
       } catch (error) {
             console.log(error);

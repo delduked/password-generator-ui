@@ -23,6 +23,29 @@ $('tr').click(function(){
 $(document).ready(function(){
     console.log('document ready');
 
+    fetch('http://192.168.0.32:8989/getPasswords',{
+        method: 'GET',
+        headers: {"content-type":"application/json"}
+    })
+    .then(response => {
+        return response.json()
+    })
+    .then(json =>{
+        console.log(json)
+        for (i=0; i < json.length -1; i++){
+            $('tbody').append(`
+            <tr [uid='`+json[i].id+`']>
+            <td id="account">`+json[i].name+`</td>
+            <td id="username">`+json[i].username+`</td>
+            <td id="password">`+json[i].password+`</td>
+            </tr>
+        `)
+        }
+
+        
+    })
+    .catch(error => console.log(error))
+
       $("#lowercase").click(function() {
 
             if ($("#lowercase").hasClass("is-success")) {
@@ -116,6 +139,55 @@ const request = async (length,lower,upper,number,special)=>{
         console.log(error)
     }
 }
+$('#save').click(function(){
+
+      let password = $(this).parent().prev().children('input').val()
+      let username = $(this).parent().parent().prev().children('p').children('input').val()
+      let account = $(this).parent().parent().prev().prev().children('p').children('input').val()
+
+      console.log(password);
+      console.log(username);
+      console.log(account);
+
+      savePassword(account,username,password)
+      
+})
+
+const savePassword = async (account, username, password, jq) =>{
+      try {
+            let body = await {
+                  name: account,
+                  username: username,
+                  password: password
+            }
+
+            let url = await "http://192.168.0.32:8989/postPassword"
+            fetch(url,{
+                  method: 'POST',
+                  body: JSON.stringify(body),
+                  headers: {
+                        "content-type":"application/json"
+                  }
+            })
+            .then(data => {return data.json()})
+            .then(json => {
+                  
+                  $('tbody').append(`
+                        <tr [uid='`+json.uid+`']>
+                        <td id="account">`+json.name+`</td>
+                        <td id="username">`+json.username+`</td>
+                        <td id="password">`+json.password+`</td>
+                        </tr>
+                  `)
+
+                  console.log(json)
+            })
+            .catch(err => {throw err})
+          
+      } catch (error) {
+            console.log(error);
+      }
+}
 $('#edit').click(function(){
       // let previousAccount = $(this).parent().prev().children("td#account").text()
       // let previousUsername = $(this).parent().prev().children("td#username").text()
@@ -129,7 +201,7 @@ $('#edit').click(function(){
       
 })
 
-const updatePassword = async (account, username, password) =>{
+const updatePassword = async (account, username, password, jq) =>{
       try {
             let body = await {
                   account: account,
@@ -144,7 +216,15 @@ const updatePassword = async (account, username, password) =>{
                   headers: {
                         "content-type":"application/json"
                   }
-            }).catch(err => {throw err})
+            })
+            .then(data => {return data.json()})
+            .then(json => {
+                  jq.parent().parent().prev().children("td#account").text(account)
+                  jq.parent().parent().prev().children("td#username").text(username)
+                  jq.parent().parent().prev().children("td#password").text(password)
+                  console.log(json)
+            })
+            .catch(err => {throw err})
           
       } catch (error) {
             console.log(error);

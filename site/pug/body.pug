@@ -1,4 +1,5 @@
-section.hero.is-info.is-medium
+
+section.hero.is-info.is-halfheight
       .hero-body 
             .container.is-max-desktop 
                   .columns
@@ -25,43 +26,46 @@ section.hero.is-info.is-medium
                                                 #number.button Numbers
                                                 #special.button Special Characters
 
-section.hero.is-small
-      
+section.hero.is-halfheight
       .hero-body
-            
             .container.is-max-desktop
-                  p.title Make New Password
-                  .field
-                        p.control.is-expanded
-                              input.input(type="text" placeholder="Account")
-                  .field
-                        p.control.is-expanded
-                              input.input(type="text" placeholder="Username")
-                  .field.has-addons
-                        p.control.is-expanded
-                              input.input(type="text" placeholder="Password")
-                        p.control
-                              a#submit.button Submit
-
-
-section.hero.is-info.is-halfheight
-      .hero-body 
-            .container.is-max-desktop 
                   .columns
-                        table.table.is-fullwidth
-                              tbody
-                                    tr
-                                          td#account facebook
-                                          td#username nate.delduca@gmail.com
-                                          td#password n4th4n43l
-                                    tr
-                                          td#account facebook
-                                          td#username nate.delduca@gmail.com
-                                          td#password n4th4n43l
-                                    tr
-                                          td#account facebook
-                                          td#username nate.delduca@gmail.com
-                                          td#password n4th4n43l
+                        .column.is-two-fifths 
+                              section.is-large
+                                    .title Make a New Password
+                                    .subtitle Save the generated password for later use!
+                        .column.is-three-fifths 
+                              section.is-large
+                                    .field
+                                          p.control.is-expanded
+                                                input.input(type="text" placeholder="Account")
+                                    .field
+                                          p.control.is-expanded
+                                                input.input(type="text" placeholder="Username")
+                                    .field.has-addons
+                                          p.control.is-expanded
+                                                input.input(type="text" placeholder="Password")
+                                          p.control
+                                                a#save.button Save
+                                          p.control
+                                                a#copy.button Copy
+                  .columns
+                        .column.is-full-width
+                              section.is-large
+                                    table.table.is-fullwidth
+                                          tbody
+                                                //- tr
+                                                //-       td#account facebook
+                                                //-       td#username nate.delduca@gmail.com
+                                                //-       td#password n4th4n43l
+                                                //- tr
+                                                //-       td#account facebook
+                                                //-       td#username nate.delduca@gmail.com
+                                                //-       td#password n4th4n43l
+                                                //- tr
+                                                //-       td#account facebook
+                                                //-       td#username nate.delduca@gmail.com
+                                                //-       td#password n4th4n43l
 
 footer.footer
       .content.has-text-centered

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
   </header>
   <body>
-    <section class="hero is-info is-medium">
+    <section class="hero is-info is-halfheight">
       <div class="hero-body"> 
         <div class="container is-max-desktop"> 
           <div class="columns">
@@ -47,52 +47,46 @@
         </div>
       </div>
     </section>
-    <section class="hero is-small">
+    <section class="hero is-halfheight">
       <div class="hero-body">
         <div class="container is-max-desktop">
-          <p class="title">Make New Password</p>
-          <div class="field">
-            <p class="control is-expanded">
-              <input class="input" type="text" placeholder="Account">
-            </p>
-          </div>
-          <div class="field">
-            <p class="control is-expanded">
-              <input class="input" type="text" placeholder="Username">
-            </p>
-          </div>
-          <div class="field has-addons">
-            <p class="control is-expanded">
-              <input class="input" type="text" placeholder="Password">
-            </p>
-            <p class="control"><a class="button" id="submit">Submit</a></p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="hero is-info is-halfheight">
-      <div class="hero-body"> 
-        <div class="container is-max-desktop"> 
           <div class="columns">
-            <table class="table is-fullwidth">
-              <tbody>
-                <tr>
-                  <td id="account">facebook</td>
-                  <td id="username">nate.delduca@gmail.com</td>
-                  <td id="password">n4th4n43l</td>
-                </tr>
-                <tr>
-                  <td id="account">facebook</td>
-                  <td id="username">nate.delduca@gmail.com</td>
-                  <td id="password">n4th4n43l</td>
-                </tr>
-                <tr>
-                  <td id="account">facebook</td>
-                  <td id="username">nate.delduca@gmail.com</td>
-                  <td id="password">n4th4n43l</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="column is-two-fifths"> 
+              <section class="is-large">
+                <div class="title">Make a New Password</div>
+                <div class="subtitle">Save the generated password for later use!</div>
+              </section>
+            </div>
+            <div class="column is-three-fifths"> 
+              <section class="is-large">
+                <div class="field">
+                  <p class="control is-expanded">
+                    <input class="input" type="text" placeholder="Account">
+                  </p>
+                </div>
+                <div class="field">
+                  <p class="control is-expanded">
+                    <input class="input" type="text" placeholder="Username">
+                  </p>
+                </div>
+                <div class="field has-addons">
+                  <p class="control is-expanded">
+                    <input class="input" type="text" placeholder="Password">
+                  </p>
+                  <p class="control"><a class="button" id="save">Save</a></p>
+                  <p class="control"><a class="button" id="copy">Copy</a></p>
+                </div>
+              </section>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-full-width">
+              <section class="is-large">
+                <table class="table is-fullwidth">
+                  <tbody></tbody>
+                </table>
+              </section>
+            </div>
           </div>
         </div>
       </div>

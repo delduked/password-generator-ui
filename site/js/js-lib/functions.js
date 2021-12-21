@@ -2,6 +2,29 @@
 $(document).ready(function(){
     console.log('document ready');
 
+    fetch('http://192.168.0.32:8989/getPasswords',{
+        method: 'GET',
+        headers: {"content-type":"application/json"}
+    })
+    .then(response => {
+        return response.json()
+    })
+    .then(json =>{
+        console.log(json)
+        for (i=0; i < json.length -1; i++){
+            $('tbody').append(`
+            <tr [uid='`+json[i].id+`']>
+            <td id="account">`+json[i].name+`</td>
+            <td id="username">`+json[i].username+`</td>
+            <td id="password">`+json[i].password+`</td>
+            </tr>
+        `)
+        }
+
+        
+    })
+    .catch(error => console.log(error))
+
       $("#lowercase").click(function() {
 
             if ($("#lowercase").hasClass("is-success")) {
