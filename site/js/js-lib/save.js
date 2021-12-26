@@ -1,26 +1,22 @@
 $('#save').click(function(){
 
-      let password = $(this).parent().prev().children('input').val()
-      let username = $(this).parent().parent().prev().children('p').children('input').val()
-      let account = $(this).parent().parent().prev().prev().children('p').children('input').val()
+      let Password = $(this).parent().prev().children('input').val()
+      let Username = $(this).parent().parent().prev().children('p').children('input').val()
+      let Account = $(this).parent().parent().prev().prev().children('p').children('input').val()
 
-      console.log(password);
-      console.log(username);
-      console.log(account);
-
-      savePassword(account,username,password)
+      savePassword(Account,Username,Password)
       
 })
 
-const savePassword = async (account, username, password, jq) =>{
+const savePassword = async (Account, Username, Password) =>{
       try {
             let body = await {
-                  name: account,
-                  username: username,
-                  password: password
+                  Account: Account,
+                  Username: Username,
+                  Password: Password
             }
 
-            let url = await "http://192.168.0.32:8989/postPassword"
+            let url = await "http://localhost:8080/db"
             fetch(url,{
                   method: 'POST',
                   body: JSON.stringify(body),
@@ -30,15 +26,18 @@ const savePassword = async (account, username, password, jq) =>{
             })
             .then(data => {return data.json()})
             .then(json => {
-                  
-                  $('tbody').append(`
-                        <tr [uid='`+json.uid+`']>
-                        <td id="account">`+json.name+`</td>
-                        <td id="username">`+json.username+`</td>
-                        <td id="password">`+json.password+`</td>
+                  console.log(json)
+                  if (json.Status != 200 || json.Error != null){
+                        console.log(json)
+                    } else {
+                        $('tbody').append(`
+                        <tr [Key='`+json.Field.Key+`']>
+                        <td id="Account">`+json.Field.Account+`</td>
+                        <td id="Username">`+json.Field.Username+`</td>
+                        <td id="Password">`+json.Field.Password+`</td>
                         </tr>
-                  `)
-
+                        `)
+                    }
                   console.log(json)
             })
             .catch(err => {throw err})

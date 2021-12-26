@@ -1,3 +1,10 @@
+$('a#copy').click(function(){
+
+      let Password = $("input#password").val()
+      console.log(Password)
+      $("p.is-expanded input.input").val(Password)
+      
+})
 $('tr').click(function(){
       var elementclicked = $(this)
       var hasBeenClicked = $('#edit')
@@ -11,7 +18,7 @@ $('tr').click(function(){
       if (hasBeenClicked.length > 0) {
             $('#edit').remove()
       } else {
-                  let append = `<tr id="edit"><td><input value="`+account+`" class="input" type="text" placeholder="account"></td><td><input value="`+username+`" class="input" type="text" placeholder="username/email"></td><td><input value="`+password+`" class="input" type="password" placeholder="password"></td><td><button id="edit" class="button">Edit</button></td></tr>`
+                  let append = `<tr id="edit"><td><input value="`+account+`" class="input" type="text" placeholder="account"></td><td><input value="`+username+`" class="input" type="text" placeholder="username/email"></td><td><input value="`+password+`" class="input" type="password" placeholder="password"></td><td><button id="update" class="button">Update</button></td></tr>`
                   $(append).insertAfter(elementclicked)
       }
 })
@@ -19,32 +26,16 @@ $('tr').click(function(){
 
 //       $('#edit').remove()
 // })
+var ws = new WebSocket("ws://localhost:8080/ws")
+
+ws.onopen = function(e) {
+    ws.send('my name is nathanael')
+}
 
 $(document).ready(function(){
     console.log('document ready');
-
-    fetch('http://192.168.0.32:8989/getPasswords',{
-        method: 'GET',
-        headers: {"content-type":"application/json"}
-    })
-    .then(response => {
-        return response.json()
-    })
-    .then(json =>{
-        console.log(json)
-        for (i=0; i < json.length -1; i++){
-            $('tbody').append(`
-            <tr [uid='`+json[i].id+`']>
-            <td id="account">`+json[i].name+`</td>
-            <td id="username">`+json[i].username+`</td>
-            <td id="password">`+json[i].password+`</td>
-            </tr>
-        `)
-        }
-
-        
-    })
-    .catch(error => console.log(error))
+  
+    getFieldsOnLoad()
 
       $("#lowercase").click(function() {
 
@@ -116,7 +107,7 @@ const request = async (length,lower,upper,number,special)=>{
             special: special
         }
         console.log(body)
-        let url = await "http://192.168.0.6:8080/generateBody"
+        let url = await "http://localhost:8080/pw"
         fetch(url,{
             method: 'POST',
             body: JSON.stringify(body),
@@ -126,10 +117,10 @@ const request = async (length,lower,upper,number,special)=>{
         })
             .then(data => {return data.json()})
             .then(json => {
-                if (json.error == null && json.status == 200) {
-                    $("#password").val(json.password)
-                } else {
+                if (json.Error != null || json.Status != 200) {
                     console.log(json)
+                } else {
+                    $("#password").val(json.Password)
                 }
 
             })
@@ -139,29 +130,56 @@ const request = async (length,lower,upper,number,special)=>{
         console.log(error)
     }
 }
+
+const getFieldsOnLoad = async () => {
+    try {
+        fetch('http://localhost:8080/db',{
+            method: 'GET',
+            headers: {"content-type":"application/json"}
+        })
+        .then(response => {
+            return response.json()
+        })
+        .then(json =>{
+            console.log(json)
+            if (json.Status != 200 || json.Error != null){
+                console.log(json)
+            } else {
+                for (i=0; i <= json.Fields.length -1; i++){
+                    $('tbody').append(`
+                    <tr [key='`+json.Fields[i].Key+`']>
+                    <td id="account">`+json.Fields[i].Account+`</td>
+                    <td id="username">`+json.Fields[i].Username+`</td>
+                    <td id="password">`+json.Fields[i].Password+`</td>
+                    </tr>
+                    `)
+                }
+            }
+        })
+        .catch(error =>{throw error})
+    } catch (error) {
+        console.log(error)
+    }
+}
 $('#save').click(function(){
 
-      let password = $(this).parent().prev().children('input').val()
-      let username = $(this).parent().parent().prev().children('p').children('input').val()
-      let account = $(this).parent().parent().prev().prev().children('p').children('input').val()
+      let Password = $(this).parent().prev().children('input').val()
+      let Username = $(this).parent().parent().prev().children('p').children('input').val()
+      let Account = $(this).parent().parent().prev().prev().children('p').children('input').val()
 
-      console.log(password);
-      console.log(username);
-      console.log(account);
-
-      savePassword(account,username,password)
+      savePassword(Account,Username,Password)
       
 })
 
-const savePassword = async (account, username, password, jq) =>{
+const savePassword = async (Account, Username, Password) =>{
       try {
             let body = await {
-                  name: account,
-                  username: username,
-                  password: password
+                  Account: Account,
+                  Username: Username,
+                  Password: Password
             }
 
-            let url = await "http://192.168.0.32:8989/postPassword"
+            let url = await "http://localhost:8080/db"
             fetch(url,{
                   method: 'POST',
                   body: JSON.stringify(body),
@@ -171,15 +189,18 @@ const savePassword = async (account, username, password, jq) =>{
             })
             .then(data => {return data.json()})
             .then(json => {
-                  
-                  $('tbody').append(`
-                        <tr [uid='`+json.uid+`']>
-                        <td id="account">`+json.name+`</td>
-                        <td id="username">`+json.username+`</td>
-                        <td id="password">`+json.password+`</td>
+                  console.log(json)
+                  if (json.Status != 200 || json.Error != null){
+                        console.log(json)
+                    } else {
+                        $('tbody').append(`
+                        <tr [Key='`+json.Field.Key+`']>
+                        <td id="Account">`+json.Field.Account+`</td>
+                        <td id="Username">`+json.Field.Username+`</td>
+                        <td id="Password">`+json.Field.Password+`</td>
                         </tr>
-                  `)
-
+                        `)
+                    }
                   console.log(json)
             })
             .catch(err => {throw err})
@@ -188,45 +209,54 @@ const savePassword = async (account, username, password, jq) =>{
             console.log(error);
       }
 }
-$('#edit').click(function(){
-      // let previousAccount = $(this).parent().prev().children("td#account").text()
-      // let previousUsername = $(this).parent().prev().children("td#username").text()
-      // let previousPassword = $(this).parent().prev().children("td#password").text()
+var update = document.getElementById('update')
+update.onclick = function(){
+    // let previousAccount = $(this).parent().prev().children("td#account").text()
+    // let previousUsername = $(this).parent().prev().children("td#username").text()
+    // let previousPassword = $(this).parent().prev().children("td#password").text()
+    let buttonClicked = $(this)
+    let Key = $(this).parent().parent().prev().attr('Key')
+    let Account = $(this).parent().children("td#account").val()
+    let Username = $(this).parent().children("td#username").val()
+    let Password = $(this).parent().children("td#password").val()
 
-      let account = $(this).parent().children("td#account").val()
-      let username = $(this).parent().children("td#username").val()
-      let password = $(this).parent().children("td#password").val()
+    console.log(buttonClicked)
+    console.log(Key)
+    console.log(Account)
+    console.log(Username)
+    console.log(Password)
 
-      updatePassword(account,username,password)
-      
-})
-
-const updatePassword = async (account, username, password, jq) =>{
-      try {
-            let body = await {
-                  account: account,
-                  username: username,
-                  password: password
-            }
-
-            let url = await "http://192.168.0.6:8080/updatePassword"
-            fetch(url,{
-                  method: 'POST',
-                  body: JSON.stringify(body),
-                  headers: {
-                        "content-type":"application/json"
-                  }
-            })
-            .then(data => {return data.json()})
-            .then(json => {
-                  jq.parent().parent().prev().children("td#account").text(account)
-                  jq.parent().parent().prev().children("td#username").text(username)
-                  jq.parent().parent().prev().children("td#password").text(password)
-                  console.log(json)
-            })
-            .catch(err => {throw err})
-          
-      } catch (error) {
-            console.log(error);
-      }
+    //updatePassword(account,username,password)
+    
 }
+  
+  // const updatePassword = async (Key,Account, Username, Password, buttonClicked) =>{
+  //       try {
+  //             let body = await {
+  //                   Key: Key,
+  //                   Account: Account,
+  //                   Username: Username,
+  //                   Password: Password
+  //             }
+  
+  //             let url = await "http://192.168.0.32:8080/db"
+  //             fetch(url,{
+  //                   method: 'PATCH',
+  //                   body: JSON.stringify(body),
+  //                   headers: {
+  //                         "content-type":"application/json"
+  //                   }
+  //             })
+  //             .then(data => {return data.json()})
+  //             .then(json => {
+  //                   buttonClicked.parent().parent().prev().children("td#account").text(account)
+  //                   buttonClicked.parent().parent().prev().children("td#username").text(username)
+  //                   buttonClicked.parent().parent().prev().children("td#password").text(password)
+  //                   console.log(json)
+  //             })
+  //             .catch(err => {throw err})
+            
+  //       } catch (error) {
+  //             console.log(error);
+  //       }
+  // }

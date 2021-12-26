@@ -11,7 +11,7 @@ $('tr').click(function(){
       if (hasBeenClicked.length > 0) {
             $('#edit').remove()
       } else {
-                  let append = `<tr id="edit"><td><input value="`+account+`" class="input" type="text" placeholder="account"></td><td><input value="`+username+`" class="input" type="text" placeholder="username/email"></td><td><input value="`+password+`" class="input" type="password" placeholder="password"></td><td><button id="edit" class="button">Edit</button></td></tr>`
+                  let append = `<tr id="edit"><td><input value="`+account+`" class="input" type="text" placeholder="account"></td><td><input value="`+username+`" class="input" type="text" placeholder="username/email"></td><td><input value="`+password+`" class="input" type="password" placeholder="password"></td><td><button id="update" class="button">Update</button></td></tr>`
                   $(append).insertAfter(elementclicked)
       }
 })

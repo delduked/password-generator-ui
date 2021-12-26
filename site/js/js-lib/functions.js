@@ -1,29 +1,13 @@
+var ws = new WebSocket("ws://localhost:8080/ws")
+
+ws.onopen = function(e) {
+    ws.send('my name is nathanael')
+}
 
 $(document).ready(function(){
     console.log('document ready');
-
-    fetch('http://192.168.0.32:8989/getPasswords',{
-        method: 'GET',
-        headers: {"content-type":"application/json"}
-    })
-    .then(response => {
-        return response.json()
-    })
-    .then(json =>{
-        console.log(json)
-        for (i=0; i < json.length -1; i++){
-            $('tbody').append(`
-            <tr [uid='`+json[i].id+`']>
-            <td id="account">`+json[i].name+`</td>
-            <td id="username">`+json[i].username+`</td>
-            <td id="password">`+json[i].password+`</td>
-            </tr>
-        `)
-        }
-
-        
-    })
-    .catch(error => console.log(error))
+  
+    getFieldsOnLoad()
 
       $("#lowercase").click(function() {
 
@@ -95,7 +79,7 @@ const request = async (length,lower,upper,number,special)=>{
             special: special
         }
         console.log(body)
-        let url = await "http://192.168.0.6:8080/generateBody"
+        let url = await "http://localhost:8080/pw"
         fetch(url,{
             method: 'POST',
             body: JSON.stringify(body),
@@ -105,15 +89,46 @@ const request = async (length,lower,upper,number,special)=>{
         })
             .then(data => {return data.json()})
             .then(json => {
-                if (json.error == null && json.status == 200) {
-                    $("#password").val(json.password)
-                } else {
+                if (json.Error != null || json.Status != 200) {
                     console.log(json)
+                } else {
+                    $("#password").val(json.Password)
                 }
 
             })
             .catch(err => {throw err})
 
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const getFieldsOnLoad = async () => {
+    try {
+        fetch('http://localhost:8080/db',{
+            method: 'GET',
+            headers: {"content-type":"application/json"}
+        })
+        .then(response => {
+            return response.json()
+        })
+        .then(json =>{
+            console.log(json)
+            if (json.Status != 200 || json.Error != null){
+                console.log(json)
+            } else {
+                for (i=0; i <= json.Fields.length -1; i++){
+                    $('tbody').append(`
+                    <tr [key='`+json.Fields[i].Key+`']>
+                    <td id="account">`+json.Fields[i].Account+`</td>
+                    <td id="username">`+json.Fields[i].Username+`</td>
+                    <td id="password">`+json.Fields[i].Password+`</td>
+                    </tr>
+                    `)
+                }
+            }
+        })
+        .catch(error =>{throw error})
     } catch (error) {
         console.log(error)
     }
