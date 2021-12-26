@@ -1,0 +1,10 @@
+version: '3'
+services:
+
+  svelte:
+    build:
+      context: .
+      dockerfile: image.dockerfile
+    restart: "unless-stopped"
+    ports:
+      - 5325:5000
