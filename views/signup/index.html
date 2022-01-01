@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <header>
+    <title></title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&amp;display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <style>body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  color: #777777;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+body .login {
+  width: 300px;
+  height: 175px;
+  border-radius: 10px;
+  -webkit-box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+          box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+  background: #e0e0e0;
+  border-radius: 10px;
+  padding: 3em;
+  margin: 80px;
+  -webkit-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
+body .login .username, body .login .password, body .login .secret {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  margin: 20px;
+}
+body .login #username, body .login #password, body .login #secret {
+  border-radius: 3px;
+  border: 0;
+}
+body .login .buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  width: 100%;
+}
+body .login .buttons button {
+  margin-left: 20px;
+}
+body .login .buttons a {
+  text-decoration: underline;
+  color: black;
+  font-weight: 300;
+  margin-right: 20px;
+}
+body .logo {
+  width: 225px;
+  height: 225px;
+  -webkit-box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+          box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+  border-radius: 50%;
+  background-image: url("./logo.png");
+  background-size: cover;
+  margin: 80px;
+  -webkit-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+}
+body p {
+  font-weight: 300;
+  text-align: center;
+}
+
+@media screen and (max-width: 950px) {
+  body {
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+  }
+
+  .login {
+    -webkit-transform: translatey(-240px);
+            transform: translatey(-240px);
+  }
+
+  .logo {
+    -webkit-transform: translateY(100px);
+            transform: translateY(100px);
+  }
+}
+    </style>
+  </header>
+  <body>
+    <div class="logo"></div>
+    <div class="login">
+      <div class="username">
+        <label for="username">Username</label>
+        <input id="username">
+      </div>
+      <div class="password">
+        <label for="password">Password</label>
+        <input id="password" type="password">
+      </div>
+      <div class="secret">
+        <label for="secret">Secrect</label>
+        <input id="secret" type="password">
+      </div>
+      <div class="buttons">
+        <button id="button">Sign up?</button><a href="/">Sign in</a>
+      </div>
+      <p></p>
+    </div>
+  </body>
+</html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>$(document).ready(function(){
+
+      $('button').click(login())
+
+})
+
+var login = async () => {
+      var email = $('#email').val()
+      var password = $('#password').val()
+      var secret = $('#secret').val()
+
+      var userinfo = {
+            email: email,
+            password: password,
+            secret: secret
+      }
+
+      fetch("/auth/signup",{
+            method: "POST",
+            body: userinfo
+      }).then(res => {
+            $('h2').text(JSON.stringify(res))
+      }).catch(err => {
+            $('h2').text(JSON.stringify(err))
+      })
+}
+</script>

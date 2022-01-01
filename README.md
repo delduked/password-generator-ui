@@ -1,105 +1,63 @@
-*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
+# Nateflix Live Stream
 
----
+Custom live stream website with JWT Login page. Server side rendering is run by nodejs while all code is compiled from TypeScript to JavaScript.
 
-# svelte app
+## API
+### POST request route `/auth/verfiy`
+One single post request route on the server side handles username and password authentication. `/auth/verify` If the username and password is correct than the response from the post request `/auth/verify` will reply with json response `{message:'reload'}` to signify to the client that the correct credentials have been passed from the front end client, to the backend and then to the front end. Once the response has been received on the front where the response is equal to `reload`, the javascript in the client will reload the page. The Response not only container a json response but also a signed JWT in a cookie named `authtoken` where the upon reload of the main page, the back end will conditonally load the main page `./dist/views/index/index.pug` because the client would now have a signed JWT.
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
+### Main GET route `/`
+The main route conditionally redners a `pug` template engine based on whether or not the client has a cookie named `authtoken`. If `authtoken` exists and is authentic, middle ware on the main route will verifiy the newly retrieve JWT in the cookie and if authentic will render the page `./dist/views/index/index.pug`.
 
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
+## Docker
+### login page
+In the various docker files, their is an image file `stream.dockerfile` and a compose file `docker-compose.yml`. In order to start the environment run the following command 
 
-```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
+```docker
+docker-compose up -d --force-recreate
 ```
 
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
+>`--force-recreate` is not necessary but it helps to avoid caching issues
 
+The above command will build the docker containers with setting applied in the `docker-compose.yml` and the compose file will refer to the image file `stream.dockerfile` to build the image for the container with all of the typescript files.
 
-## Get started
+### RTMP Server
+The stream feed is sent by OBS to the RTMP docker container. To start the rtmp docker container run the following command
 
-Install the dependencies...
-
-```bash
-cd svelte-app
-npm install
+```docker
+docker run --name nms -d -p 1935:1935 -p 4436:8000 -p 8443:8443 illuspas/node-media-server
 ```
 
-...then start [Rollup](https://rollupjs.org):
+RTMP's default port is `1935` and the admin page for the RTMP server is by default on port `8000`. For my own setup I changed the outside ports for the containers. If you want to run everything default run the following command
 
-```bash
-npm run dev
+```docker
+docker run --name nms -d -p 1935:1935 -p 8000:8000 -p 8443:8443 illuspas/node-media-server
 ```
 
-Navigate to [localhost:5000](http://localhost:5000). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
+To get a live output of the rtmp server run the following command on your docker host.
 
-By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
-
-If you're using [Visual Studio Code](https://code.visualstudio.com/) we recommend installing the official extension [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode). If you are using other editors you may need to install a plugin in order to get syntax highlighting and intellisense.
-
-## Building and running in production mode
-
-To create an optimised version of the app:
-
-```bash
-npm run build
+```docker
+docker logs nms -f
 ```
 
-You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
+To remove docker container along with deleting the docker image.
 
-
-## Single-page app mode
-
-By default, sirv will only respond to requests that match files in `public`. This is to maximise compatibility with static fileservers, allowing you to deploy your app anywhere.
-
-If you're building a single-page app (SPA) with multiple routes, sirv needs to be able to respond to requests for *any* path. You can make it so by editing the `"start"` command in package.json:
-
-```js
-"start": "sirv public --single"
+```docker
+docker-compose down --rmi all
 ```
 
-## Using TypeScript
+## MongoDB
+To list database the site is currently using type
 
-This template comes with a script to set up a TypeScript development environment, you can run it immediately after cloning the template with:
-
-```bash
-node scripts/setupTypeScript.js
+```javascript
+use nateflix
+db.users.find()
 ```
 
-Or remove the script via:
+To enter mongo shell type `mongo`
 
-```bash
-rm scripts/setupTypeScript.js
-```
+To remove users type
 
-## Deploying to the web
-
-### With [Vercel](https://vercel.com)
-
-Install `vercel` if you haven't already:
-
-```bash
-npm install -g vercel
-```
-
-Then, from within your project folder:
-
-```bash
-cd public
-vercel deploy --name my-project
-```
-
-### With [surge](https://surge.sh/)
-
-Install `surge` if you haven't already:
-
-```bash
-npm install -g surge
-```
-
-Then, from within your project folder:
-
-```bash
-npm run build
-surge public my-project.surge.sh
+```javascript
+db.users.remove({__v:0})
 ```

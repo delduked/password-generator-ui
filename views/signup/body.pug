@@ -1,0 +1,16 @@
+.logo
+.login
+      .username
+            label(for="username") Username
+            input#username
+      .password
+            label(for="password") Password
+            input#password(type="password")
+      .secret
+            label(for="secret") Secrect
+            input#secret(type="password")
+      .buttons
+            button#button(onclick="register()") Sign up?
+            a(href="/") Sign in
+      p= message
+      
