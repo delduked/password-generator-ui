@@ -18,6 +18,7 @@ var register = async () => {
       }).then(res => {
             return res.json()
       }).then( data =>{
+            console.log(data)
             if(data.Status == '200' && data.Error == null){
                   document.cookie = "authToken=" + data.Bearer;
                   $('p').text('Login Succesful!')
