@@ -25,6 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Import dependencies
 const express_1 = __importDefault(require("express"));
 const site_1 = __importDefault(require("./routes/site"));
+const asset_controller_1 = require("./controllers/asset.controller");
 const morgan_1 = __importDefault(require("morgan"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const cors_1 = __importDefault(require("cors"));
@@ -42,5 +43,10 @@ app.use(express_1.default.json());
 app.use((0, morgan_1.default)('dev'));
 // Main route for the live stream
 app.use('/', site_1.default);
+// Route for grabbing logo
+app.use('/logo.png', (req, res) => {
+    res.sendFile(path.join(__dirname, '../views/signup/logo.png'));
+});
+app.use('/assets', asset_controller_1.assets, express_1.default.static(path.join(__dirname, '../views/index')));
 exports.default = app;
 //# sourceMappingURL=app.js.map

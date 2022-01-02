@@ -1,6 +1,7 @@
 // Import dependencies
 import express, { Application, Request, Response } from "express";
 import site from "./routes/site";
+import {assets} from "./controllers/asset.controller";
 import morgan from 'morgan'
 import cookieParser from "cookie-parser";
 import cors from 'cors'
@@ -27,8 +28,9 @@ app.use('/',site)
 
 // Route for grabbing logo
 app.use('/logo.png',(req:Request,res: Response) =>{
-      res.sendFile(path.join(__dirname,'../views/index/logo.png'));
+      res.sendFile(path.join(__dirname,'../views/signup/logo.png'));
 })
 
+app.use('/assets',assets,express.static(path.join(__dirname,'../views/index')))
 
 export default app

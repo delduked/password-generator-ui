@@ -7,20 +7,24 @@ var login = async () => {
             Password: password,
       }
 
-      fetch("http://192.168.0.6/",{
+      fetch("http://localhost:8080/signin",{
             headers: {
                   'Content-Type': 'application/json'
             },
             method: "POST",
             body: JSON.stringify(userinfo)
       }).then(res => {
+
             return res.json()
       }).then( data =>{
-            
-	    if(data.message == 'reload'){
+
+	    if(data.Status == '200' && data.Error == null){
                 $('p').text('Login Succesful!')
-	    	setTimeout(window.location.reload.bind(window.location),1000)
-	    }
+                  document.cookie = "authToken=" + data.Bearer;
+	    	      setTimeout(window.location.reload.bind(window.location),1000)
+	    } else {
+            $('p').text('Login Failed!')
+          }
 
       }).catch(err => {
             $('p').text(JSON.stringify(err))

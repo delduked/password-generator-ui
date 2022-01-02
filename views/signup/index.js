@@ -4,12 +4,12 @@ var register = async () => {
       var secret = $('#secret').val()
 
       var userinfo = {
-            username: username,
-            password: password,
-            secret: secret
+            Username: username,
+            Password: password,
+            Secret: secret
       }
 
-      fetch("/auth/signup",{
+      fetch("http://localhost:8080/signup",{
             headers: {
                   'Content-Type': 'application/json'
             },
@@ -18,7 +18,13 @@ var register = async () => {
       }).then(res => {
             return res.json()
       }).then( data =>{
-            $('p').text(data.message)
+            if(data.Status == '200' && data.Error == null){
+                  document.cookie = "authToken=" + data.Bearer;
+                  $('p').text('Login Succesful!')
+                  setTimeout(window.location.reload.bind(window.location),1000)
+            } else {
+              $('p').text('Login Failed!')
+            }
       }).catch(err => {
             $('p').text(err)
       })

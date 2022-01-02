@@ -12,43 +12,35 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.home = void 0;
-const random_1 = __importDefault(require("random"));
+exports.assets = void 0;
 // Package for checking verifying and signing JWT for user login
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const home = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const assets = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // check if cookie exists
         if (req.cookies.authToken) {
             const authToken = yield req.cookies.authToken;
-            console.log("authToken=", authToken);
             // Verifiy if the cookie that the client has is authentic
             const decodedJwt = yield jsonwebtoken_1.default.verify(authToken, `8rA|N3yqpr7P*Am6RT8f4M=rw%CE=6uk`, (err, decoded) => {
                 if (!err) {
-                    // If the JWT is authentic continue to the next step which would be in stream.controller.ts
-                    let username = decoded === null || decoded === void 0 ? void 0 : decoded.Username;
-                    res.status(200).render('index/index', { Username: username });
+                    next();
                 }
                 else {
                     // If JWT is not authentic return a page with the a funny response
-                    res.status(500).render('signin/index', { message: "You must renew your credentials my guy." });
+                    res.status(500);
                 }
             });
             // check if the client doesn't have any JWT for this site
         }
         else if (!req.cookies.authToken) {
-            const authToken = yield req.cookies.authToken;
-            console.log("authToken=", authToken);
-            // Array of funny responses
-            const questions = yield ['Login my Guy!', 'Shall you pass?', 'login dawg?', 'sign in brah.', 'Are you going to sign in?', 'Why you no login?'];
             // Render and return page with one of the funny message from the funny messages array
-            res.status(400).render('signin/index', { message: questions[random_1.default.int((0), (5))] });
+            res.status(400);
         }
     }
     catch (error) {
         // If the server crashes or fail in any way return the login page with the error message
-        res.status(500).render('signin/index', { message: error });
+        res.status(500);
     }
 });
-exports.home = home;
-//# sourceMappingURL=home.controller.js.map
+exports.assets = assets;
+//# sourceMappingURL=asset.controller.js.map
