@@ -13,7 +13,7 @@ export const home = async (req: Request,res: Response, next: NextFunction) => {
                   console.log("authToken=",authToken);
                   
                   // Verifiy if the cookie that the client has is authentic
-                  const decodedJwt = await jwt.verify(authToken,`8rA|N3yqpr7P*Am6RT8f4M=rw%CE=6uk`,(err,decoded) => {
+                  const decodedJwt = await jwt.verify(authToken,`secret`,(err,decoded) => {
                         if (!err){
                               // If the JWT is authentic continue to the next step which would be in stream.controller.ts
                               let username = decoded?.Username

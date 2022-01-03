@@ -21,7 +21,7 @@ const assets = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
         if (req.cookies.authToken) {
             const authToken = yield req.cookies.authToken;
             // Verifiy if the cookie that the client has is authentic
-            const decodedJwt = yield jsonwebtoken_1.default.verify(authToken, `8rA|N3yqpr7P*Am6RT8f4M=rw%CE=6uk`, (err, decoded) => {
+            const decodedJwt = yield jsonwebtoken_1.default.verify(authToken, `secret`, (err, decoded) => {
                 if (!err) {
                     next();
                 }
