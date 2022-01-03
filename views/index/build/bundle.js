@@ -363,7 +363,7 @@ var app = function () {
                               "content-type": "application/json"
                         }
                   }).then((t => t.json())).then((t => {
-                        if (200 != t.Status || null != t.Error) throw error;
+                        if (200 != t.Status ) throw error;
                         return t.Fields
                   })).catch((t => {
                         throw t
@@ -380,7 +380,7 @@ var app = function () {
                   fetch("http://localhost:8080/db/" + t, {
                         method: "DELETE"
                   }).then((t => t.json())).then((t => {
-                        if (200 != t.Status || null != t.Error) throw error;
+                        if (200 != t.Status) throw error;
                         n(0, s = fetch("http://localhost:8080/db", {
                               method: "GET",
                               headers: {
@@ -425,7 +425,7 @@ var app = function () {
                                     "content-type": "application/json"
                               }
                         }).then((t => t.json())).then((t => {
-                              if (200 != t.Status || null != t.Error) throw error;
+                              if (200 != t.Status) throw error;
                               n(0, s = fetch("http://localhost:8080/db", {
                                     method: "GET",
                                     headers: {
