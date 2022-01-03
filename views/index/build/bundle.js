@@ -359,8 +359,13 @@ var app = function () {
       function q(t, e, n) {
             let s = fetch("http://localhost:8080/db", {
                         method: "GET",
+                        credentials: "include",
+                        cooke: document.cookie,
                         headers: {
-                              "content-type": "application/json"
+                              "content-type": "application/json",
+                              "access-Control-Allow-Origin": "*",
+                              "accept": "application/json",
+                              "cache-control": "no-cache"
                         }
                   }).then((t => t.json())).then((t => {
                         if (200 != t.Status || null != t.Error);
@@ -378,13 +383,26 @@ var app = function () {
                   d = "";
             return [s, o, c, i, r, l, a, u, d, function (t) {
                   fetch("http://localhost:8080/db/" + t, {
-                        method: "DELETE"
+                        method: "DELETE",
+                        credentials: "include",
+                        cooke: document.cookie,
+                        headers: {
+                              "content-type": "application/json",
+                              "access-Control-Allow-Origin": "*",
+                              "accept": "application/json",
+                              "cache-control": "no-cache"
+                        }
                   }).then((t => t.json())).then((t => {
                         if (200 != t.Status || null != t.Error);
                         n(0, s = fetch("http://localhost:8080/db", {
                               method: "GET",
+                              credentials: "include",
+                              cooke: document.cookie,
                               headers: {
-                                    "content-type": "application/json"
+                                    "content-type": "application/json",
+                                    "access-Control-Allow-Origin": "*",
+                                    "accept": "application/json",
+                                    "cache-control": "no-cache"
                               }
                         }).then((t => t.json())).then((t => t.Fields)).catch((t => {
                               throw t
@@ -403,8 +421,13 @@ var app = function () {
                   fetch("http://localhost:8080/pw", {
                         method: "POST",
                         body: JSON.stringify(t),
+                        credentials: "include",
+                        cooke: document.cookie,
                         headers: {
-                              "content-type": "application/json"
+                              "content-type": "application/json",
+                              "access-Control-Allow-Origin": "*",
+                              "accept": "application/json",
+                              "cache-control": "no-cache"
                         }
                   }).then((t => t.json())).then((t => {
                         n(8, d = t.Password)
@@ -421,15 +444,25 @@ var app = function () {
                         fetch("http://localhost:8080/db", {
                               method: "POST",
                               body: JSON.stringify(t),
+                              credentials: "include",
+                              cooke: document.cookie,
                               headers: {
-                                    "content-type": "application/json"
+                                    "content-type": "application/json",
+                                    "access-Control-Allow-Origin": "*",
+                                    "accept": "application/json",
+                                    "cache-control": "no-cache"
                               }
                         }).then((t => t.json())).then((t => {
                               if (200 != t.Status || null != t.Error);
                               n(0, s = fetch("http://localhost:8080/db", {
                                     method: "GET",
+                                    credentials: "include",
+                                    cooke: document.cookie,
                                     headers: {
-                                          "content-type": "application/json"
+                                          "content-type": "application/json",
+                                          "access-Control-Allow-Origin": "*",
+                                          "accept": "application/json",
+                                          "cache-control": "no-cache"
                                     }
                               }).then((t => t.json())).then((t => t.Fields)).catch((t => {
                                     throw t
