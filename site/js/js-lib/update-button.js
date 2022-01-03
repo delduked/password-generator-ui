@@ -19,33 +19,34 @@ update.onclick = function(){
     
 }
   
-  // const updatePassword = async (Key,Account, Username, Password, buttonClicked) =>{
-  //       try {
-  //             let body = await {
-  //                   Key: Key,
-  //                   Account: Account,
-  //                   Username: Username,
-  //                   Password: Password
-  //             }
+  const deletePassword = async (Key,Account, Username, Password, buttonClicked) =>{
+        try {
+              let body = await {
+                    Key: Key,
+                    Account: Account,
+                    Username: Username,
+                    Password: Password
+              }
   
-  //             let url = await "http://192.168.0.32:8080/db"
-  //             fetch(url,{
-  //                   method: 'PATCH',
-  //                   body: JSON.stringify(body),
-  //                   headers: {
-  //                         "content-type":"application/json"
-  //                   }
-  //             })
-  //             .then(data => {return data.json()})
-  //             .then(json => {
-  //                   buttonClicked.parent().parent().prev().children("td#account").text(account)
-  //                   buttonClicked.parent().parent().prev().children("td#username").text(username)
-  //                   buttonClicked.parent().parent().prev().children("td#password").text(password)
-  //                   console.log(json)
-  //             })
-  //             .catch(err => {throw err})
+              let url = await "http://192.168.0.32:8080/db"
+              let res = await fetch(url,{
+                    method: 'PATCH',
+                    body: JSON.stringify(body),
+                    headers: {
+                          "content-type":"application/json"
+                    }
+              })
+
+              let data = await res.json()
+              if (data.Status == "200" && data.Error == null){
+                // clear contents of tbody
+                // append contents after getting data from database
+                $("tbody").empty()
+                getFieldsOnLoad()
+              }
+
             
-  //       } catch (error) {
-  //             console.log(error);
-  //       }
-  // }
+        } catch (error) {
+              console.log(error);
+        }
+  }

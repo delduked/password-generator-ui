@@ -1,8 +1,3 @@
-var ws = new WebSocket("ws://localhost:8080/ws")
-
-ws.onopen = function(e) {
-    ws.send('my name is nathanael')
-}
 
 $(document).ready(function(){
     console.log('document ready');
@@ -105,25 +100,42 @@ const request = async (length,lower,upper,number,special)=>{
 
 const getFieldsOnLoad = async () => {
     try {
+
+
         fetch('http://localhost:8080/db',{
             method: 'GET',
-            headers: {"content-type":"application/json"}
+            Cookie: document.cookie,
+            credentials: 'include',
+            headers: {
+                "content-type":"application/json",
+                "Access-Control-Allow-Origin": "*",
+                'Accept': 'application/json',
+                "Cache": "no-cache",
+            }
         })
         .then(response => {
             return response.json()
         })
         .then(json =>{
             console.log(json)
-            if (json.Status != 200 || json.Error != null){
-                console.log(json)
-            } else {
+            if (json.Status == 200 || json.Error == null){
                 for (i=0; i <= json.Fields.length -1; i++){
                     $('tbody').append(`
-                    <tr [key='`+json.Fields[i].Key+`']>
-                    <td id="account">`+json.Fields[i].Account+`</td>
-                    <td id="username">`+json.Fields[i].Username+`</td>
-                    <td id="password">`+json.Fields[i].Password+`</td>
-                    </tr>
+                        <tr Key="`+json.Fields[i].Key+`">
+                        <td id="account">
+                        <input type="text" value="`+json.Fields[i].Account+`" class="input">
+                        </td>
+                        <td id="username">
+                        <input type="text" value="`+json.Fields[i].Username+`" class="input">
+                        </td>
+                        <td id="password">
+                        <div class="field has-addons">
+                        <p class="control is-expanded">
+                        <input class="input" type="text" value="`+json.Fields[i].Password+`" placeholder="Password">
+                        </p>
+                        <p class="control"><a class="button" id="del">Del</a></p>
+                        </div>
+                        </tr>
                     `)
                 }
             }

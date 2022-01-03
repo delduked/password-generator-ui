@@ -54,18 +54,31 @@ section.hero.is-halfheight
                               section.is-large
                                     table.table.is-fullwidth
                                           tbody
-                                                tr(Key="testkey1")
-                                                      td#account facebook
-                                                      td#username nate.delduca@gmail.com
-                                                      td#password n4th4n43l
-                                                tr(Key="testkey2")
-                                                      td#account facebook
-                                                      td#username nate.delduca@gmail.com
-                                                      td#password n4th4n43l
-                                                tr(Key="testkey3")
-                                                      td#account facebook
-                                                      td#username nate.delduca@gmail.com
-                                                      td#password n4th4n43l
+                                                //- tr(Key="testkey1")
+                                                //-       td#account facebook
+                                                //-       td#username nate.delduca@gmail.com
+                                                //-       td#password n4th4n43l
+                                                //- tr(Key="testkey2")
+                                                //-       td#account facebook
+                                                //-       td#username nate.delduca@gmail.com
+                                                //-       td#password n4th4n43l
+                                                //- tr(Key="testkey3")
+                                                //-       td#account facebook
+                                                //-       td#username nate.delduca@gmail.com
+                                                //-       td#password n4th4n43l
+                                                tr(key='{field.Key}')
+                                                      td#account
+                                                            input.input(type='text' value='')
+                                                      td#username
+                                                            input.input(type='text' value='')
+                                                      td#password
+                                                            .field.has-addons
+                                                                  p.control.is-expanded
+                                                                        input.input(type='text' bind:value='' placeholder='Password')
+                                                                  p.control
+                                                                        a#del.button(on:click='') Del
+
+
 
 footer.footer
       .content.has-text-centered
