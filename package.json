@@ -1,30 +1,32 @@
 {
-  "name": "gulp-env",
+  "name": "svelte-app",
   "version": "1.0.0",
-  "description": "My personal Gulp Development enironment",
-  "main": "Gulpfile.js",
   "scripts": {
-    "gulp": "gulp"
+    "build": "rollup -c",
+    "dev": "rollup -c -w --host",
+    "dev2": "run -p start:dev autobuild",
+    "start": "sirv public",
+    "start2": "sirv public --dev",
+    "expose": "sirv public --host"
   },
-  "repository": {
-    "type": "git",
-    "url": "http://git.nated.ca/nate/gulpEnv.git"
-  },
-  "author": "nate del duca",
-  "license": "ISC",
-  "bugs": {
-    "url": "http://git.nated.ca/nate/gulpEnv/issues"
-  },
-  "homepage": "http://git.nated.ca/nate/gulpEnv#readme",
   "devDependencies": {
-    "browser-sync": "^2.26.7",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-pug": "^4.0.1",
-    "gulp-sass": "^4.0.2"
+    "@rollup/plugin-commonjs": "^16.0.0",
+    "@rollup/plugin-node-resolve": "^10.0.0",
+    "node-sass": "^7.0.0",
+    "pug": "^3.0.2",
+    "pug2svelte": "0.0.2-alpha.9",
+    "rollup": "^2.3.4",
+    "rollup-plugin-css-only": "^3.1.0",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-svelte": "^7.0.0",
+    "rollup-plugin-terser": "^7.0.0",
+    "sass": "^1.45.0",
+    "svelte": "^3.0.0",
+    "svelte-preprocess": "^4.10.0",
+    "svelte-preprocess-sass": "^2.0.1"
   },
-  "keywords": [
-    "gulp"
-  ]
+  "dependencies": {
+    "bulma": "^0.9.3",
+    "sirv-cli": "^1.0.0"
+  }
 }
