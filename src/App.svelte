@@ -17,7 +17,7 @@ function generateRandomPassword() {
             number: number,
             special: special
         }
-        let url = "https://nated.ca/pw/pw"
+        let url = "https://api.nated.ca/pw"
         fetch(url,{
             method: 'POST',
             body: JSON.stringify(body),
