@@ -35,6 +35,7 @@ function generateRandomPassword() {
 </script>
 
 <svelte:head>
+  <title>Password Generator</title>
   <style>
     body {
       margin: 0;
@@ -85,8 +86,16 @@ function generateRandomPassword() {
 </section>
 <footer class="footer">
   <div class="content has-text-centered">
-    <p>
-      |    <strong>nated.ca</strong> This is nate typing in a description about he password management app I am making.</p>
+    <p style="word-wrap: break-word;">
+      <em>Donate</em> <br> <br>
+      <strong>BTC: </strong> bc1qx0vchcqhev04lavqxqw28g3cvfx9ljavtq37ue <br>--<br>
+      <strong>ETH: </strong> 0x18F5e463889aB04aA6cF6b90C8B822d52B2526d5 <br>--<br>
+      <strong>ADA: </strong> addr1q9n70j6vqy888ffqgnqjjuvna0uvw70prgmlvu9wdnjl6zt8ul95cqgwwwjjq3xp99ce86lccau7zx3h7ec2um89l5ys9ps46u <br>--<br>
+      <strong>XRP: </strong> rnhCCNykamgVubeUx4sMfvrKnUCyef9T6K <br>--<br>
+      <strong>SOL: </strong> 1jKW5K2sofpw4S6cZH3MkfDuSWAgee4ajgtzSyVaLCs <br>--<br>
+      <strong>DOT: </strong> 1VeCgpyMkf9LqKJXNFmJq6E2vGK2Dh9in9MRDZkHMDUpGd3 <br>--<br>
+      <strong>ALGO: </strong> NKBSYOMLVD6KPACXYWDNOBMHXP5YFKHBR5ALGWOPFVYN6NH6GDWU6ZSAAA <br>--<br>
+    </p>
   </div>
 </footer>
 
