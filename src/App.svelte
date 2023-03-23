@@ -13,7 +13,7 @@
   let newPassword = "";
 
   function delPassword(key){
-    fetch('http://192.168.0.32:5324/db/'+key,{
+    fetch('http://192.168.0.6:5324/db/'+key,{
             method: 'DELETE',
         })
         .then(response => {
@@ -23,7 +23,7 @@
             if (json.Status != 200 || json.Error != null){
                 throw error
             } else {
-              fieldsOnLoad = fetch('http://192.168.0.32:5324/db',{
+              fieldsOnLoad = fetch('http://192.168.0.6:5324/db',{
                 method: 'GET',
                 headers: {"content-type":"application/json"}
               })
@@ -36,7 +36,7 @@
   }
 
   function getFieldsOnLoad() {
-        return fetch('http://192.168.0.32:5324/db',{
+        return fetch('http://192.168.0.6:5324/db',{
             method: 'GET',
             headers: {"content-type":"application/json"}
         })
@@ -61,7 +61,7 @@ function generateRandomPassword() {
             number: number,
             special: special
         }
-        let url = "http://192.168.0.32:5324/pw"
+        let url = "http://192.168.0.6:5324/pw"
         fetch(url,{
             method: 'POST',
             body: JSON.stringify(body),
@@ -83,7 +83,7 @@ function saveNewPassword() {
         Username: newUsername,
         Password: newPassword,
       }
-      let url = "http://192.168.0.32:5324/db"
+      let url = "http://192.168.0.6:5324/db"
         fetch(url,{
           method: 'POST',
           body: JSON.stringify(body),
@@ -97,7 +97,7 @@ function saveNewPassword() {
         if (json.Status != 200 || json.Error != null){
             throw error
         } else {
-          fieldsOnLoad = fetch('http://192.168.0.32:5324/db',{
+          fieldsOnLoad = fetch('http://192.168.0.6:5324/db',{
             method: 'GET',
             headers: {"content-type":"application/json"}
           })
